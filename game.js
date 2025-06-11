@@ -4,9 +4,11 @@ let startingPoint = [7, 13];
 let x = 7, y = 13;
 let path = [{ x, y }];
 
+//Cuando el nombre habla de game se refiere a la grilla que uno dibuja, cuando habla de level es del modelo estático a seguir
+
 const gridSize = 15;
-const cellSizeGame = 500 / gridSize; // para #game
-const cellSizeLevel = 300 / gridSize; // para #level (ajústalo según el nuevo tamaño del canvas)
+const cellSizeGame = 500 / gridSize; 
+const cellSizeLevel = 300 / gridSize;
 let steps = 0;
 
 const gameCanvas = document.getElementById("game");
@@ -19,7 +21,7 @@ function draw() {
   gameContext.clearRect(0, 0, 500, 500);
   levelContext.clearRect(0, 0, 300, 300);
 
-  // Dibujar la grilla del canvas de juego
+  // Dibujar la grilla del canvas de #game
   gameContext.strokeStyle = "#ccc";
   for (let i = 0; i <= gridSize; i++) {
     gameContext.beginPath();
@@ -33,7 +35,7 @@ function draw() {
     gameContext.stroke();
   }
 
-  // Dibujar la grilla del canvas del modelo
+  // Dibujar la grilla del canvas del #level
   levelContext.strokeStyle = "#ccc";
   for (let i = 0; i <= gridSize; i++) {
     levelContext.beginPath();
@@ -77,9 +79,7 @@ function mostrarPuzzle() {
   draw();
 }
 
-
-
-
+//función para las teclas
 function getMove(key) {
   const moves = {
     "ArrowUp": { dx: 0, dy: -1 },
@@ -95,7 +95,7 @@ function getMove(key) {
 }
 
 document.addEventListener("keydown", (e) => {
-  // Prevenir scroll con teclas de flecha
+  // Código de don chatcito para prevenir que se haga scroll con teclas de flecha
   const keysQueDesactivanScroll = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "];
   if (keysQueDesactivanScroll.includes(e.key)) {
     e.preventDefault();
@@ -124,16 +124,10 @@ function startGame() {
   level = 1;
   currLevel = levels[level];
   x = 7;
-  y = 4;
+  y = 13;
   path = [{ x, y }];
   document.getElementById("infoDia").innerText = "Día 1";
 }
-
-function mostrarReina() {
-  document.getElementById("mesa").style.display = "none";
-  document.getElementById("narrativa").style.display = "block";
-}
-
 
 function mostrarReina() {
   document.getElementById("mesa").style.display = "none";
@@ -149,7 +143,7 @@ function iniciarPuzzle() {
 
 function reiniciarNivel() {
   x = 7;
-  y = 4;
+  y = 13;
   path = [{ x, y }];
   draw();
 }
@@ -157,11 +151,7 @@ function reiniciarNivel() {
 function siguienteDia() {
   document.getElementById("finDia").style.display = "none";
   level++;
-  if (!levels[level]) {
-    alert("¡Has terminado el juego!");
-    location.reload();
-    return;
-  }
+ 
   document.getElementById("infoDia").innerText = `Día ${level}`;
   currLevel = levels[level];
   reiniciarNivel();

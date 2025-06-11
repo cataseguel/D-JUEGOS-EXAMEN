@@ -1,6 +1,6 @@
-// Primeros tres niveles (simple para probar)
+// Creación del modelo de la grilla a recrear. Los 0 representan los espacios vacíos y los 1 los lleneados con gris
 var levels = [
-  [], // índice 0 no se usa
+  [], 
   [
     // Nivel 1
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -19,6 +19,6 @@ var levels = [
     [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 
-    // Resto vacío...
+   
   ]
 ];

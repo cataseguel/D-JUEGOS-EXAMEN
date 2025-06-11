@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Menú desplegable -->
   <div class="menu-superior">
   <button class="boton-menu" onclick="toggleMenu()">☰</button>
   <div class="menu-desplegable" id="menuOpciones">
@@ -14,15 +15,15 @@
   </div>
 </div>
 
-
+<!-- Pantalla menú principal -->
   <div id="menu" class="pantalla" style="padding-top: 300px;">
     <h1 style="font-size: 50pt;">PROTOTIPO EXAMEN</h1>
     <button onclick="startGame()">Nuevo juego</button>
     <button>Ajustes</button>
     <button>Salir</button>
-    <!-- Aquí podrías colocar una imagen del fondo principal -->
   </div>
 
+<!-- Pantalla ilustración día 1 -->
  <div id="mesa" class="pantalla" style="display:none;">
   <div class="pantalla-con-fondo1">
     <div class="contenido-superpuesto1">
@@ -34,21 +35,17 @@
   </div>
 </div>
 
+<!-- Pantalla comentario de la reina -->
 <div id="narrativa" class="pantalla" style="display:none;">
   <div class="pantalla-con-fondo2">
     <div class="contenido-superpuesto2">
-    <!-- Aquí va la imagen de la Reina -->
     <p id="textoReina" style="padding-top: 30px; padding-bottom: 30px; background-color: black; color: white">REINA: Quiero que me pintes un paisaje</p>
     <button onclick="mostrarPuzzle()">Comenzar a pintar</button>
   </div>
 </div>
 </div>
 
-
-
-
-
-
+<!-- Pantalla juego puzzle - Game: donde uno dibuja - Level: modelo estático-->
   <div id="juego" class="pantalla" style="display:none;">
 
   <div class="fondoPuzzle">
@@ -64,9 +61,9 @@
       <button onclick="reiniciarNivel()" class="boton-reiniciar">Reiniciar</button>
     </div>
   </div>
-
 </div>
 
+<!-- Pantalla comentario de la reina -->
 <div id="finDia" class="pantalla-con-fondoFinal" style="display:none;">
   <div class="contenido-superpuestoFinal">
     <p style="padding-top: 30px; padding-bottom: 30px; background-color: black; color: white">Interesante...</p>
