@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PROTOTIPO</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="menu-superior">
+  <button class="boton-menu" onclick="toggleMenu()">☰</button>
+  <div class="menu-desplegable" id="menuOpciones">
+    <a href="#" onclick="volverAlMenu()">Salir al menú</a>
+    <a href="#">Ajustes</a>
+  </div>
+</div>
+
+
+  <div id="menu" class="pantalla" style="padding-top: 300px;">
+    <h1 style="font-size: 50pt;">PROTOTIPO EXAMEN</h1>
+    <button onclick="startGame()">Nuevo juego</button>
+    <button>Ajustes</button>
+    <button>Salir</button>
+    <!-- Aquí podrías colocar una imagen del fondo principal -->
+  </div>
+
+ <div id="mesa" class="pantalla" style="display:none;">
+  <div class="pantalla-con-fondo1">
+    <div class="contenido-superpuesto1">
+      <p style="padding-top: 30px; padding-bottom: 30px; background-color: black; color: white;">
+        Te sientas frente a tu mesa de trabajo. La Reina te espera.
+      </p>
+      <button onclick="mostrarReina()">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<div id="narrativa" class="pantalla" style="display:none;">
+  <div class="pantalla-con-fondo2">
+    <div class="contenido-superpuesto2">
+    <!-- Aquí va la imagen de la Reina -->
+    <p id="textoReina" style="padding-top: 30px; padding-bottom: 30px; background-color: black; color: white">REINA: Quiero que me pintes un paisaje</p>
+    <button onclick="mostrarPuzzle()">Comenzar a pintar</button>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+  <div id="juego" class="pantalla" style="display:none;">
+
+  <div class="fondoPuzzle">
+    <div class="canvasContainer">
+      <div id="contenedorGame">
+        <h3 style="color: white; font-size: 20pt;">Tu dibujo</h3>
+        <canvas id="game" width="500" height="500"></canvas>
+      </div>
+      <div id="contenedorLevel">
+        <h3 style="color: white; font-size: 20pt;">Modelo</h3>
+        <canvas id="level" width="300" height="300"></canvas>
+      </div>
+      <button onclick="reiniciarNivel()" class="boton-reiniciar">Reiniciar</button>
+    </div>
+  </div>
+
+</div>
+
+<div id="finDia" class="pantalla-con-fondoFinal" style="display:none;">
+  <div class="contenido-superpuestoFinal">
+    <p style="padding-top: 30px; padding-bottom: 30px; background-color: black; color: white">Interesante...</p>
+    <button onclick="siguienteDia()">Continuar</button>
+  </div>
+</div>
+
+
+
+  <script src="levels.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

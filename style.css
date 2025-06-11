@@ -1,0 +1,202 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.pantalla {
+  padding: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 25px;
+}
+
+.canvasContainer {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+canvas {
+  border: 2px solid #555;
+  background: #fff;
+}
+
+
+
+
+.superior {
+  margin-bottom: 20px;
+}
+
+.dialogoFinal {
+  margin-top: 30px;
+  padding: 20px;
+  border: 2px dashed #999;
+  background-color: #fafafa;
+}
+
+.pantalla-con-fondo1 {
+  width: 2000px;
+  height: 990px;
+  background-image: url('img/fondo-d1.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.contenido-superpuesto1 {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 1000px;
+  transform: translate(-50%, -50%);
+  color: white; /* o negro, depende del fondo */
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.pantalla-con-fondo2 {
+  width: 2000px;
+  height: 990px;
+  background-image: url('img/fondo-reina.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.contenido-superpuesto2 {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 1000px;
+  transform: translate(-50%, -50%);
+  color: white; /* o negro, depende del fondo */
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+#juego {
+  min-height: 100vh;
+  background-image: url('img/fondo-puzzle.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+
+
+.menu-superior {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+.boton-menu {
+  background-color: #333;
+  color: white;
+  font-size: 24px;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.menu-desplegable {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin-top: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  border-radius: 5px;
+  min-width: 150px;
+}
+
+.menu-desplegable a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-desplegable a:hover {
+  background-color: #f0f0f0;
+}
+
+.canvasContainer {
+  position: relative; /* clave para que los hijos se posicionen dentro */
+  width: 100%;
+  height: 100vh; /* o el alto que necesites */
+}
+
+/* Mover el modelo (canvas de la izquierda) */
+#contenedorLevel {
+  position: absolute;
+  left: 400px; /* 200px hacia la izquierda */
+  top: 50px;
+}
+
+/* Mover el canvas de dibujo */
+#contenedorGame {
+  position: absolute;
+  top: 150px;
+  right: 235px;
+}
+
+.boton-reiniciar {
+  position: absolute;
+  bottom: 180px;
+  left: 1400px;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  font-size: 20px;
+  border-radius: 8px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;;
+}
+
+.pantalla-con-fondoFinal {
+  width: 2000px;
+  height: 990px;
+  background-image: url('img/fondo-final.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.contenido-superpuestoFinal {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 1000px;
+  transform: translate(-50%, -50%);
+  color: white; /* o negro, depende del fondo */
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+
+
+
+
+
+
+
+
+
