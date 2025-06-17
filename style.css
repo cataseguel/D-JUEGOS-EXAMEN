@@ -23,13 +23,6 @@ button {
   margin-top: 20px;
 }
 
-canvas {
-  border: 2px solid #555;
-  background: #fff;
-}
-
-
-
 
 .superior {
   margin-bottom: 20px;
@@ -79,20 +72,11 @@ canvas {
   left: 50%;
   width: 1000px;
   transform: translate(-50%, -50%);
-  color: white; /* o negro, depende del fondo */
+  color: white; 
   text-align: center;
   padding: 20px;
   border-radius: 12px;
 }
-
-#juego {
-  min-height: 100vh;
-  background-image: url('img/fondo-puzzle.jpg');
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-}
-
 
 
 .menu-superior {
@@ -146,14 +130,14 @@ canvas {
 /* Posición grillas de los puzzles */
 #contenedorLevel {
   position: absolute;
-  left: 400px; 
-  top: 50px;
+  right: 600px; 
+  top: -15px;
 }
 
 #contenedorGame {
   position: absolute;
-  top: 150px;
-  right: 235px;
+  top: 245px;
+  left: 190px;
 }
 
 .boton-reiniciar {
@@ -190,6 +174,60 @@ canvas {
   padding: 20px;
   border-radius: 12px;
 }
+
+#fondoCompuestopuzzle img {
+  pointer-events: none;
+}
+
+.boton-reiniciar-imagen {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  cursor: pointer;
+  z-index: 10;
+  top: 670px;
+  right: 880px;
+}
+
+.boton-reiniciar-imagen:hover {
+  /*transform: scale(1.1); */
+  content: url("img/borrar-hover.png");
+}
+
+#barraAprobacionContainer {
+  width: 500px;
+  height: 40px;
+  top: 15px;
+  border: 2px solid #333;
+  background-color: #eee;
+  margin-top: 20px;
+  position: relative;
+}
+
+#barraAprobacion {
+  height: 100%;
+  width: 0%;
+  background-color: #6fbf73; /* verde al inicio */
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.burbuja {
+  position: absolute;
+  top: 30px; /* ajusta según posición de la paloma */
+  left: 450px;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: 2px solid #444;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-style: italic;
+  max-width: 300px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
 
 
 

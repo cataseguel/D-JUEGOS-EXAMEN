@@ -50,15 +50,36 @@
 
   <div class="fondoPuzzle">
     <div class="canvasContainer">
+      <div id="fondoCompuestopuzzle" style="position: relative; width: 100vw; height: 100vh;">
+        <!-- <img src="img/fondo.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"> -->
+      <img src="img/cuadro.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;">
+      <img src="img/velas.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3;">
+      <img src="img/silla.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4;">
+      <img src="img/r-indiferente.png" id= "imagenReina" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5;">
+      <img src="img/imaginacion.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 6;">
+      <img src="img/paloma.png" id= "imagenPaloma" style="position: absolute; top: 20px; left: 400px; width: 30%; height: 30%; z-index: 6;">
+      <div id="burbujaDecepcion" class="burbuja" style="display: none;">
+      Creo que deberías empezar de nuevo...
+      </div>
+
+    </div>
       <div id="contenedorGame">
         <h3 style="color: white; font-size: 20pt;">Tu dibujo</h3>
         <canvas id="game" width="500" height="500"></canvas>
+        <div id="barraAprobacionContainer">
+        <div id="barraAprobacion"></div>
+        </div>
+
       </div>
       <div id="contenedorLevel">
         <h3 style="color: white; font-size: 20pt;">Modelo</h3>
         <canvas id="level" width="300" height="300"></canvas>
       </div>
-      <button onclick="reiniciarNivel()" class="boton-reiniciar">Reiniciar</button>
+      <!-- Botón de reinicio con la imagen del tarro -->
+      <img src="img/borrar.png"
+     alt="Reiniciar"
+     onclick="reiniciarNivel()"
+     class="boton-reiniciar-imagen">
     </div>
   </div>
 </div>
