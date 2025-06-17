@@ -48,6 +48,9 @@
 <!-- Pantalla juego puzzle - Game: donde uno dibuja - Level: modelo estático-->
   <div id="juego" class="pantalla" style="display:none;">
 
+    <canvas id="pieTimer" width="200" height="200" style="position: absolute; top: 160px; left: 105px; z-index: 10; width: 260px; height: 260px;"></canvas>
+
+
   <div class="fondoPuzzle">
     <div class="canvasContainer">
       <div id="fondoCompuestopuzzle" style="position: relative; width: 100vw; height: 100vh;">
@@ -61,6 +64,7 @@
       <div id="burbujaDecepcion" class="burbuja" style="display: none;">
       Creo que deberías empezar de nuevo...
       </div>
+      <img src="img/reloj.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 11;">
 
     </div>
       <div id="contenedorGame">
@@ -83,6 +87,15 @@
     </div>
   </div>
 </div>
+
+  
+
+  <div id="resultadoFinal" class="cuadro-final" style="display: none;">
+  <img id="imagenReinaFinal" src="img/r-indiferente-2.png" style="width: 40%; height: 40%;">
+  <p id="textoResultado" style="font-size: 20pt; margin-top: 20px;"></p>
+  <button onclick="siguienteDia()">Siguiente nivel</button>
+</div>
+
 
 <!-- Pantalla comentario de la reina -->
 <div id="finDia" class="pantalla-con-fondoFinal" style="display:none;">

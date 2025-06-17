@@ -5,9 +5,16 @@ let x = 7, y = 13;
 let path = [{ x, y }];
 let errores = 0;
 let progreso = 0; // porcentaje entre 0 y 100
-
-//contar cuadrados del recorrido por nivel
+let cuadrosCorrectosVisitados = 0;
 let totalCuadrosCorrectos = 0;
+
+let timerInterval = null;
+let timerStarted = false;
+let timerElapsed = 0;
+const timerDuration = 60; // 60 segundos
+const pieCanvas = document.getElementById("pieTimer");
+const pieCtx = pieCanvas.getContext("2d");
+
 
 function contarCuadrosDelNivel() {
   totalCuadrosCorrectos = 0;
@@ -98,6 +105,31 @@ function mostrarPuzzle() {
   draw();
 }
 
+function drawPieTimer() {
+  const percent = timerElapsed / timerDuration;
+  const angle = percent * 2 * Math.PI;
+
+  // Limpiar canvas
+  pieCtx.clearRect(0, 0, pieCanvas.width, pieCanvas.height);
+
+  // Fondo gris
+  pieCtx.fillStyle = "#ddd";
+  pieCtx.beginPath();
+  pieCtx.moveTo(40, 40); // centro
+  pieCtx.arc(40, 40, 35, 0, 2 * Math.PI);
+  pieCtx.fill();
+
+  // Pie progresivo
+  pieCtx.fillStyle = "#3498db"; // color del tiempo
+  pieCtx.beginPath();
+  pieCtx.moveTo(40, 40); // centro
+  pieCtx.arc(40, 40, 35, -0.5 * Math.PI, angle - 0.5 * Math.PI);
+  pieCtx.lineTo(40, 40);
+  pieCtx.fill();
+}
+
+
+
 //función para las teclas
 function getMove(key) {
   const moves = {
@@ -114,7 +146,6 @@ function getMove(key) {
 }
 
 document.addEventListener("keydown", (e) => {
-  // Código de don chatcito para prevenir que se haga scroll con teclas de flecha
   const keysQueDesactivanScroll = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "];
   if (keysQueDesactivanScroll.includes(e.key)) {
     e.preventDefault();
@@ -122,24 +153,53 @@ document.addEventListener("keydown", (e) => {
 
   const move = getMove(e.key);
   if (move) {
-    const newX = Math.max(0, Math.min(gridSize - 1, x + move.dx));
-const newY = Math.max(0, Math.min(gridSize - 1, y + move.dy));
-const yaVisitado = path.some(p => p.x === newX && p.y === newY);
 
-if (!yaVisitado) {
-  x = newX;
-  y = newY;
-  path.push({ x, y });
-  validarMovimiento(x, y);
-  draw();
-}
+    if (!timerStarted) {
+    timerStarted = true;
+    timerElapsed = 0;
+    drawPieTimer();
+    timerInterval = setInterval(() => {
+    timerElapsed++;
+    if (timerElapsed >= timerDuration) {
+      clearInterval(timerInterval);
+      timerElapsed = timerDuration;
+      // Aquí puedes hacer algo si se acaba el tiempo, como mostrar un mensaje
+    }
+    drawPieTimer();
+    }, 1000);
+    }
+
+
+    const newX = Math.max(0, Math.min(gridSize - 1, x + move.dx));
+    const newY = Math.max(0, Math.min(gridSize - 1, y + move.dy));
+    const esPuntoInicio = newX === startingPoint[0] && newY === startingPoint[1];
+    const yaVisitado = path.some(p => p.x === newX && p.y === newY);
+
+    // ✅ PERMITIR pisar el punto de inicio, incluso si ya fue visitado
+    if (!yaVisitado || esPuntoInicio) {
+      x = newX;
+      y = newY;
+      path.push({ x, y });
+
+      if (!yaVisitado) {
+        validarMovimiento(x, y);
+      }
+
+      draw();
+
+      // ✔ Mostrar resultado si vuelve al punto de inicio (aunque no haya hecho todo bien)
+      if (esPuntoInicio && path.length > 1) {
+        mostrarResultadoFinal();
+      }
+    }
   }
 
   if (e.key === "Enter") {
-  document.getElementById("juego").style.display = "none";
-  document.getElementById("finDia").style.display = "flex";
-}
+    document.getElementById("juego").style.display = "none";
+    document.getElementById("finDia").style.display = "flex";
+  }
 });
+
 
 
 
@@ -155,6 +215,18 @@ function startGame() {
   document.getElementById("infoDia").innerText = "Día 1";
 }
 
+function contarCuadrosDelNivel() {
+  totalCuadrosCorrectos = 0;
+  for (let i = 0; i < currLevel.length; i++) {
+    for (let j = 0; j < currLevel[i].length; j++) {
+      if (currLevel[i][j] === 1 || currLevel[i][j] === 2) {
+        totalCuadrosCorrectos++;
+      }
+    }
+  }
+}
+
+
 function mostrarReina() {
   document.getElementById("mesa").style.display = "none";
   document.getElementById("narrativa").style.display = "block";
@@ -166,47 +238,18 @@ function iniciarPuzzle() {
   document.getElementById("mesa").style.display = "block";
 }
 
-
-function reiniciarNivel() {
-  x = 7;
-  y = 13;
-  path = [{ x, y }];
-  errores = 0;
-  progreso = 0;
-  draw();
-
-//reiniciar imagen de la reina
-  const imagen = document.getElementById("imagenReina");
-  if (imagen) {
-    imagen.src = "img/r-indiferente.png";
-  }
-  actualizarBarra();
-
-  const burbuja = document.getElementById("burbujaDecepcion");
-if (burbuja) {
-  burbuja.style.display = "none";
-}
-
-  const paloma = document.getElementById("imagenPaloma");
-  if (paloma) {
-  paloma.src = "img/paloma.png"; // o el archivo original que usas
-  }
-
-
-}
-
-
 // Para chequear el trazo que dibujas
 function validarMovimiento(x, y) {
   const correcto = currLevel[y]?.[x];
-  const esNuevo = !path.slice(0, -1).some(p => p.x === x && p.y === y); // revisamos el path excepto el actual
+  const esNuevo = !path.slice(0, -1).some(p => p.x === x && p.y === y); 
 
   if (esNuevo) {
     if (correcto === 1 || correcto === 2) {
-      progreso += (100 / totalCuadrosCorrectos); // avanzamos proporcional
+      cuadrosCorrectosVisitados++;
+      progreso += (100 / totalCuadrosCorrectos); 
     } else {
       errores++;
-      progreso -= 8;
+      progreso -= 15;
 
       const imagen = document.getElementById("imagenReina");
       if (imagen) {
@@ -235,26 +278,91 @@ function validarMovimiento(x, y) {
 
 //Función para barra progreso
 function actualizarBarra() {
-  progreso = Math.max(0, Math.min(100, progreso));
-
-  // Corrige errores de punto flotante al final
-  if (path.filter(p => currLevel[p.y]?.[p.x] === 1 || currLevel[p.y]?.[p.x] === 2).length === totalCuadrosCorrectos) {
-    progreso = 100;
-  }
+  let progresoCalculado = ((cuadrosCorrectosVisitados - errores) / totalCuadrosCorrectos) * 100;
+  progresoCalculado = Math.max(0, Math.min(100, progresoCalculado));
+  progreso = progresoCalculado;
 
   const barra = document.getElementById("barraAprobacion");
   barra.style.width = progreso + "%";
 
   if (progreso >= 70) {
-    barra.style.backgroundColor = "#6fbf73";
+    barra.style.backgroundColor = "#6fbf73"; // verde
   } else if (progreso >= 40) {
-    barra.style.backgroundColor = "#f1c40f";
+    barra.style.backgroundColor = "#f1c40f"; // amarillo
   } else {
-    barra.style.backgroundColor = "#e74c3c";
+    barra.style.backgroundColor = "#e74c3c"; // rojo
   }
 }
 
 
+
+function reiniciarNivel() {
+  x = 7;
+  y = 13;
+  path = [{ x, y }];
+  cuadrosCorrectosVisitados = 0;
+  errores = 0;
+  progreso = 0;
+
+  if (timerInterval) {
+  clearInterval(timerInterval);
+  }
+  timerStarted = false;
+  timerElapsed = 0;
+  drawPieTimer(); // para reiniciar visualmente
+
+
+  draw();
+
+//reiniciar imagen de la reina
+  const imagen = document.getElementById("imagenReina");
+  if (imagen) {
+    imagen.src = "img/r-indiferente.png";
+  }
+  actualizarBarra();
+
+  const burbuja = document.getElementById("burbujaDecepcion");
+if (burbuja) {
+  burbuja.style.display = "none";
+}
+
+  const paloma = document.getElementById("imagenPaloma");
+  if (paloma) {
+  paloma.src = "img/paloma.png"; // o el archivo original que usas
+  }
+}
+
+function mostrarResultadoFinal() {
+  // Redondear progreso
+  const progresoFinal = Math.round(progreso);
+
+  // Mostrar porcentaje y mensaje
+  const texto = document.getElementById("textoResultado");
+  const imagen = document.getElementById("imagenReinaFinal");
+
+  let mensaje = "";
+  let imagenSrc = "";
+
+  if (progresoFinal >= 90) {
+    mensaje = `¡Excelente trabajo! Tu aprobación fue de ${progresoFinal}%.`;
+    imagenSrc = "img/r-indiferente-2.png";
+  } else if (progresoFinal >= 70) {
+    mensaje = `Bien hecho. Tu aprobación fue de ${progresoFinal}%.`;
+    imagenSrc = "img/r-sorprendida-2.png";
+  } else if (progresoFinal >= 40) {
+    mensaje = `Podrías mejorar. Tu aprobación fue de ${progresoFinal}%.`;
+    imagenSrc = "img/r-molesta-2.png";
+  } else {
+    mensaje = `Estoy decepcionada... Tu aprobación fue de ${progresoFinal}%.`;
+    imagenSrc = "img/r-decepcionada-2.png";
+  }
+
+  texto.textContent = mensaje;
+  imagen.src = imagenSrc;
+
+  // Mostrar cuadro
+  document.getElementById("resultadoFinal").style.display = "block";
+}
 
 
 function siguienteDia() {
