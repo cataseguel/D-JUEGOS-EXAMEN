@@ -155,27 +155,25 @@ document.addEventListener("keydown", (e) => {
   if (move) {
 
     if (!timerStarted) {
-    timerStarted = true;
-    timerElapsed = 0;
-    drawPieTimer();
-    timerInterval = setInterval(() => {
-    timerElapsed++;
-    if (timerElapsed >= timerDuration) {
-      clearInterval(timerInterval);
-      timerElapsed = timerDuration;
-      // Aquí puedes hacer algo si se acaba el tiempo, como mostrar un mensaje
+      timerStarted = true;
+      timerElapsed = 0;
+      drawPieTimer();
+      timerInterval = setInterval(() => {
+        timerElapsed++;
+        if (timerElapsed >= timerDuration) {
+          clearInterval(timerInterval);
+          timerElapsed = timerDuration;
+          // Aquí puedes hacer algo si se acaba el tiempo, como mostrar un mensaje
+        }
+        drawPieTimer();
+      }, 1000);
     }
-    drawPieTimer();
-    }, 1000);
-    }
-
 
     const newX = Math.max(0, Math.min(gridSize - 1, x + move.dx));
     const newY = Math.max(0, Math.min(gridSize - 1, y + move.dy));
     const esPuntoInicio = newX === startingPoint[0] && newY === startingPoint[1];
     const yaVisitado = path.some(p => p.x === newX && p.y === newY);
 
-    // ✅ PERMITIR pisar el punto de inicio, incluso si ya fue visitado
     if (!yaVisitado || esPuntoInicio) {
       x = newX;
       y = newY;
@@ -187,7 +185,6 @@ document.addEventListener("keydown", (e) => {
 
       draw();
 
-      // ✔ Mostrar resultado si vuelve al punto de inicio (aunque no haya hecho todo bien)
       if (esPuntoInicio && path.length > 1) {
         mostrarResultadoFinal();
       }
@@ -195,10 +192,18 @@ document.addEventListener("keydown", (e) => {
   }
 
   if (e.key === "Enter") {
-    document.getElementById("juego").style.display = "none";
-    document.getElementById("finDia").style.display = "flex";
+    level++;
+    if (levels[level]) {
+      currLevel = levels[level];
+      contarCuadrosDelNivel();
+      reiniciarNivel();
+      draw();
+    } else {
+      console.log("No hay más niveles disponibles.");
+    }
   }
 });
+
 
 
 
@@ -368,12 +373,21 @@ function mostrarResultadoFinal() {
 function siguienteDia() {
   document.getElementById("finDia").style.display = "none";
   level++;
- 
-  document.getElementById("infoDia").innerText = `Día ${level}`;
-  currLevel = levels[level];
-  reiniciarNivel();
-  document.getElementById("juego").style.display = "block";
+  document.getElementById("resultadoFinal").style.display = "none";
+
+
+  if (levels[level]) {
+    currLevel = levels[level];
+    reiniciarNivel();
+    contarCuadrosDelNivel();
+    document.getElementById("infoDia").innerText = `Día ${level}`;
+    document.getElementById("juego").style.display = "block";
+    draw();
+  } else {
+    console.log("No hay más niveles disponibles.");
+  }
 }
+
 
 
 //menú desplegable
